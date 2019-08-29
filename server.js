@@ -1,25 +1,32 @@
 const express = require("express");
 const router = express.Router();
-
-// const log = (req, res, next) => {
-//   console.log("logging");
-//   req.mydata = "hello";
-//   next();
-// };
+const Book = require("./models/Books");
 
 router.get("/", (req, res) => {
   res.send({ data: "1" });
 });
 
-router.put("/data", (req, res) => {});
+//CRUD
+router.put("/", (req, res) => {});
 
 router.get("/data", (req, res) => {
   res.send({ message: [1, 2, 3] });
 });
 
 router.post("/data", (req, res) => {
-  console.log(req.body);
-  res.send({ ok: true });
+  let newData = {
+    name: req.body.name,
+    author: req.body.author,
+    description: req.body.description,
+    date: req.body.date
+  };
+  Book.create(newData, err => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).json(newData);
+    }
+  });
 });
 
 module.exports = router;
