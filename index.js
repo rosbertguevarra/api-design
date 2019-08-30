@@ -19,6 +19,7 @@ app.use(morgan("dev"));
 app.use("/api", server);
 app.use("/api/data", server);
 app.use("/api/data/:id", server);
+app.use("api/data/login", server);
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {

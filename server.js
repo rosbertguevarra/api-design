@@ -1,28 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const Book = require("./models/Books");
+const Blog = require("./models/Blog");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 router.get("/data", async (req, res) => {
-  const books = await Book.find({});
-  res.status(200).json(books);
+  const blogs = await Blog.find({});
+  res.status(200).json(blogs);
 });
 router.put("/data/:id", async (req, res) => {
-  const book = await Book.findById({ _id: req.params.id }, err);
+  const blog = await Blog.findById({ _id: req.params.id }, err);
   if (err) {
     throw err;
   } else {
-    res.status(200).json(book);
+    res.status(200).json(blog);
   }
 });
 
 router.post("/data", (req, res) => {
   let newData = {
-    name: req.body.name,
+    title: req.body.title,
     author: req.body.author,
-    description: req.body.description,
+    body: req.body.body,
     date: req.body.date
   };
-  Book.create(newData, err => {
+  Blog.create(newData, err => {
     if (err) {
       console.log(err);
     } else {
@@ -31,9 +34,25 @@ router.post("/data", (req, res) => {
   });
 });
 
+router.post("/signup", async (req, res) => {
+  let newUser = {
+    firstName: req.body.firstName,
+    lastname: req.body.lastName,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 10)
+  };
+  Blog.create(newUser, err => {
+    if (err) {
+      throw err;
+    } else {
+      res.status(200).json(newUser);
+    }
+  });
+});
+
 router.delete("/data/:id", async (req, res) => {
-  const book = await Book.findByIdAndRemove({ _id: req.params.id });
-  res.send(book);
+  const blog = await Blog.findByIdAndRemove({ _id: req.params.id });
+  res.send(blog);
 });
 
 module.exports = router;
