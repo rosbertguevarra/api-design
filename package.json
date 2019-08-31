@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon index.js"
+    "watch": "nodemon index.js",
+    "build": "webpack",
+    "start:dev": "webpack-dev-server --mode development --hot"
   },
   "author": "rosbert",
   "license": "ISC",
@@ -13,6 +15,7 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "css-loader": "^3.2.0",
     "cuid": "^2.1.6",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
@@ -20,9 +23,25 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.6.10",
     "morgan": "^1.9.1",
+    "passport-local": "^1.0.0",
+    "style-loader": "^1.0.0",
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.5.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }
