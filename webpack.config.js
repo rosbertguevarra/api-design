@@ -1,24 +1,32 @@
 const path = require("path");
+const webpack = require("webpack");
+require("@babel/register");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 var nodeExternals = require("webpack-node-externals");
-// require("babel-register");
-// Webpack Configuration
-const config = {
+
+module.exports = {
   // Entry
-  entry: "./src/index.js",
-  mode: "development",
+  entry: [
+    "./src/index.js",
+    "webpack-dev-server/client?http://localhost:8080",
+    "webpack/hot/only-dev-server"
+  ],
 
   // Output
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
   },
   devServer: {
+    // contentBase: path.join(__dirname, "dist"),
+    hot: true,
+    open: true,
+    historyApiFallback: true,
     stats: {
       children: false,
       maxModules: 0
     },
-    port: 3000
+    contentBase: "./dist"
   },
 
   // Loaders
@@ -28,7 +36,12 @@ const config = {
       {
         test: /\.jsx$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
       },
       // CSS Files
       {
@@ -37,20 +50,24 @@ const config = {
       }
     ]
   },
+
+  stats: {
+    colors: true,
+    reasons: true,
+    chunks: true
+  },
+
   // Plugins
   plugins: [
     new HtmlWebpackPlugin({
       template: "dist/index.html",
       filename: "index.html",
       hash: true
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
-  // node: {
-  //   fs: "empty",
-  //   net: "empty",
-  //   tls: "empty"
-  // }
 };
+
 // Exports
 module.exports = {
   target: "node", // in order to ignore built-in modules like path, fs, etc.

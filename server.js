@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-// const Blog = require("./models/Blog");
-import Blog from "./models/Blog";
-const User = require("./models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+// import Blog from "./models/Blog";
+const Blog = require("./models/Blog");
+
+router.get("/", (req, res) => {
+  res.send("hi");
+});
 
 router.get("/data", async (req, res) => {
   const blogs = await Blog.find({});
