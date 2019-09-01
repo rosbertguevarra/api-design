@@ -1,14 +1,15 @@
-const server = require("../server");
-const signup = require("../controllers/signup");
-const login = require("../controllers/login");
-const crud = require("../controllers/crud");
-const express = require("express");
+import server from "../server";
+import signup from "../controllers/signup";
+import login from "../controllers/login";
+import crud from "../controllers/crud";
+import express from "express";
 const app = express();
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const path = require("path");
+import bodyParser from "body-parser";
+import morgan from "morgan";
+import cors from "cors";
+import mongoose from "mongoose";
+import path from "path";
+
 app.disable("x-powered-by");
 
 const db = mongoose.connection;
@@ -23,11 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.use("/api/", server);
-app.use("/api", server);
-app.use("/api/data", crud);
-app.use("/api/data/:id", crud);
-app.use("/api/data/", login);
-app.use("/api/data/signup", signup);
+app.use("/api", crud);
+app.use("/api/post/:id", crud);
+app.use("/api", login);
+app.use("/api", signup);
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {

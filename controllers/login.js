@@ -1,8 +1,7 @@
-const express = require("express");
+import express from "express";
+import User from "../models/User";
+import jwt from "jsonwebtoken";
 const router = express.Router();
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-// import jwt from "jsonwebtoken";
 
 router.post("/login", (req, res) => {
   const user = {
@@ -14,21 +13,4 @@ router.post("/login", (req, res) => {
   });
 });
 
-// const verifyToken = (req, res, next) => {
-//   const bearerHeader = req.headers["authorization"];
-
-//   if (typeof bearerHeader !== "undefined") {
-//     const bearer = bearerHeader.split(" ");
-
-//     const bearerToken = bearer[1];
-
-//     req.token = bearerToken;
-
-//     next();
-//   } else {
-//     res.status(403);
-//   }
-// };
-
-module.exports = router;
-// module.exports = verifyToken;
+export default router;

@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+import User from "../models/User";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", (req, res) => {
   let newUser = {
     userName: req.body.userName,
     firstName: req.body.firstName,
